@@ -1,6 +1,6 @@
 #!/bin/bash
 
-action=$(echo -e "Install\nRemove\nList\nSearch" | fzf --prompt="Flatpak Action> ")
+action=$(echo -e "Install\nRemove\nSearch" | fzf --prompt="Flatpak Action> ")
 case "$action" in
     Install)
         app=$(flatpak remote-ls --app | awk '{print $1}' | fzf --prompt="Select App to Install> ")
@@ -10,12 +10,9 @@ case "$action" in
         app=$(flatpak list | awk '{print $1}' | fzf --prompt="Select App to Remove> ")
         [[ -n "$app" ]] && flatpak uninstall -y "$app"
         ;;
-    List)
-        flatpak list | less
-        ;;
     Search)
-        term=$(fzf --prompt="Search Term> ")
-        flatpak search "$term" | less
+        term=$(flatpak remote-ls --app | awk '{print $1}' | fzf --prompt="Search Term> ")
+        [[ -n "$term"]] && flatpak search "$term"
         ;;
     *)
         echo "No action selected."
