@@ -1,0 +1,23 @@
+#!/bin/bash
+
+action=$(echo -e "Install\nRemove\nUpdate\nSearch" | fzf --prompt="APT Action> ")
+case "$action" in
+    Install)
+        app=$(apt list | awk -F/ '{print $1}' | fzf --prompt="Select App to Install> ")
+        [[ -n "$app" ]] && sudo apt install "$app"
+        ;;
+    Remove)
+        app=$(apt list --installed | awk -F/ '{print $1}' | fzf --prompt="Select App to Remove> ")
+        [[ -n "$app" ]] && sudo apt remove "$app"
+        ;;
+    Search)
+        term=$(apt list | awk -F/ '{print $1}' | fzf --prompt="Search Term> ")
+        [[ -n "$term" ]] && apt search "$term"
+        ;;
+    Update)
+	sudo apt update && sudo apt upgrade
+        ;;
+    *)
+        echo "No action selected."
+        ;;
+esac
