@@ -1,0 +1,23 @@
+#!/bin/bash
+
+action=$(echo -e "Install\nRemove\nPurge\nClean" | fzf --prompt="APT Action> ")
+case "$action" in
+    Install)
+        app=$(apt list | awk -F/ '{print $1}' | fzf --prompt="Select App to Install> ")
+        [[ -n "$app" ]] && sudo apt install -y "$app"
+        ;;
+    Remove)
+        app=$(apt list --installed | awk -F/ '{print $1}' | fzf --prompt="Select App to Remove> ")
+        [[ -n "$app" ]] && sudo apt remove -y "$app"
+        ;;
+	Purge)
+        app=$(apt list --installed | awk -F/ '{print $1}' | fzf --prompt="Select App to Purge> ")
+        [[ -n "$app" ]] && sudo apt purge -y "$app"
+        ;;
+	Clean)
+		sudo apt-get autoremove -y
+		;;
+    *)
+        echo "No action selected."
+        ;;
+esac

@@ -1,0 +1,58 @@
+#!/bin/bash
+pmlist=("apt" "flatpak" "pacman" "yay" "pacseek")
+availablepmlist="exit\nfull update"
+
+# Check if package managers in pmlist are executables binaries
+for str in ${pmlist[@]}; do
+	if command -v $str 2>&1 >/dev/null
+		then
+			availablepmlist="${availablepmlist}\n${str}"
+	fi
+done
+
+# If there's pacman but not yay
+if [[ "${availablepmlist}" == *"pacman"* ]] && [[ "${availablepmlist}" != *"yay"* ]]
+	then
+		clear
+		echo -e "\nPlease, install yay\n"
+		read -p "Press enter to continue . . ."
+		exit
+fi
+# If there's yay but not pacseek
+if [[ "${availablepmlist}" == *"yay"* ]] && [[ "${availablepmlist}" != *"pacseek"* ]]
+	then
+		clear
+		echo -e "Installing pacseek as CLI CUI for YAY"
+		yay -Syu
+		yay -S pacseek
+		read -p "Press enter to continue . . ."
+fi
+if [[ "${availablepmlist}" == *"pacseek"* ]]
+	then
+		availablepmlist=${availablepmlist//"pacman\n"/} # Rimuovo pacman dalla lista
+		availablepmlist=${availablepmlist//"yay\n"/} # Rimuovo yay dalla lista
+fi
+
+# main switch case
+application=$(echo -e "${availablepmlist}" | fzf --prompt="PM-M> ")
+case "$application" in
+    apt | deb)
+		aptpmm
+        ;;
+    flatpak)
+		flatpmm
+        ;;
+    pacman | yay | pacseek | arch )
+		pacseek
+        ;;
+    "full update" | fu)
+        fupmm
+		;;
+    exit)
+        echo "Goodbye!"
+        ;;
+    *)
+        echo "No action selected."
+        ;;
+esac
+
