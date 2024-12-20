@@ -1,0 +1,33 @@
+#! /bin/bash
+clear
+sudo echo -e "##### Full Update Script #####"
+
+echo -e "\n##### APT #####"
+if ! command -v apt 2>&1 >/dev/null
+then
+	echo -e "apt could not be found. Skipping this package manager. "
+	exit 1
+else
+	sudo apt update
+	sudo apt upgrade
+fi
+
+echo -e "\n##### FLATPAK #####"
+if ! command -v flatpak 2>&1 >/dev/null
+then
+	echo -e "flatpak could not be found. Skipping this package manager."
+	exit 1
+else
+	flatpak update
+fi
+
+echo -e "\n##### PACMAN #####"
+if ! command -v pacman 2>&1 >/dev/null
+then
+	echo -e "pacman could not be found. Skipping this package manager."
+	exit 1
+else
+	sudo pacman -Syu
+fi
+
+echo -e "\n"
