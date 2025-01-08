@@ -33,26 +33,32 @@ if [[ "${availablepmlist}" == *"pacseek"* ]]
 		availablepmlist=${availablepmlist//"yay\n"/} # Rimuovo yay dalla lista
 fi
 
-# main switch case
-application=$(echo -e "${availablepmlist}" | fzf --prompt="PM-M> ")
-case "$application" in
-    apt | deb)
-		aptpmm
-        ;;
-    flatpak)
-		flatpmm
-        ;;
-    pacman | yay | pacseek | arch )
-		pacseek
-        ;;
-    "full update" | fu)
-        fupmm
-		;;
-    exit)
-        echo "Goodbye!"
-        ;;
-    *)
-        echo "No action selected."
-        ;;
-esac
-
+exitCheck=0
+errorMessage=""
+while [ $exitCheck = 0 ]
+do
+	# main switch case
+	application=$(echo -e "${availablepmlist}" | fzf --prompt="${errorMessage}pmm> ")
+	errorMessage=""
+	case "$application" in
+	    apt | deb)
+			aptpmm
+	        ;;
+	    flatpak)
+			flatpmm
+	        ;;
+	    pacman | yay | pacseek | arch )
+			pacseek
+	        ;;
+	    "full update" | fu)
+	        fupmm
+			;;
+	    exit)
+		exitCheck=1
+	        echo "Goodbye!"
+	        ;;
+	    *)
+	        errorMessage=" ERROR: not an entry! "
+	        ;;
+	esac
+done

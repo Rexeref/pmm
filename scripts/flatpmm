@@ -1,17 +1,17 @@
 #!/bin/bash
 
-action=$(echo -e "Install\nRemove\nPurge\nClean" | fzf --prompt="Flatpak Action> ")
+action=$(echo -e "Install\nRemove\nPurge\nClean" | fzf --prompt="pmm>flatpak> ")
 case "$action" in
     Install)
-        app=$(flatpak remote-ls --app | awk '{print $1}' | fzf --prompt="Select App to Install> ")
+        app=$(flatpak remote-ls --app | awk '{print $1}' | fzf --prompt="pmm>flatpak>install> ")
         [[ -n "$app" ]] && flatpak install -y "$app"
         ;;
     Remove)
-        app=$(flatpak list | awk '{print $1}' | fzf --prompt="Select App to Remove> ")
+        app=$(flatpak list | awk '{print $1}' | fzf --prompt="pmm>flatpak>uninstall> ")
         [[ -n "$app" ]] && flatpak uninstall -y "$app"
         ;;
 	Purge)
-        app=$(flatpak list | awk '{print $1}' | fzf --prompt="Select App to Purge> ")
+        app=$(flatpak list | awk '{print $1}' | fzf --prompt="pmm>flatpak>purge ")
         [[ -n "$app" ]] && flatpak uninstall --delete-data -y "$app"
         ;;
 	Clean)
