@@ -6,6 +6,24 @@ echo -e "╭────────────────────╮"
 echo -e "│ \x1b[93mFull Update Script\x1b[0m │"
 echo -e "╰────────────────────╯"
 
+echo -e "\n╭──────────────╮"
+echo -e "│ \x1b[96mPACMAN / YAY\x1b[0m │"
+echo -e "╰──────────────╯"
+# If there's pacman but not yay
+if [[ "${availablepmlist}" == *"pacman"* ]] && [[ "${availablepmlist}" != *"yay"* ]]
+	then
+		clear
+		echo -e "\nPlease, install yay\n"
+		read -p "Press enter to continue . . ."
+		exit
+fi
+if ! command -v yay 2>&1 >/dev/null
+then
+	echo -e "pacman could not be found. Skipping this package manager."
+else
+	yay -Syyu
+fi
+
 echo -e "\n╭─────╮"
 echo -e "│ \x1b[91mAPT\x1b[0m │"
 echo -e "╰─────╯"
@@ -27,22 +45,6 @@ else
 	flatpak update
 fi
 
-echo -e "\n╭──────────────╮"
-echo -e "│ \x1b[96mPACMAN / YAY\x1b[0m │"
-echo -e "╰──────────────╯"
-# If there's pacman but not yay
-if [[ "${availablepmlist}" == *"pacman"* ]] && [[ "${availablepmlist}" != *"yay"* ]]
-	then
-		clear
-		echo -e "\nPlease, install yay\n"
-		read -p "Press enter to continue . . ."
-		exit
-fi
-if ! command -v pacman 2>&1 >/dev/null
-then
-	echo -e "pacman could not be found. Skipping this package manager."
-else
-	sudo pacman -Syu
-fi
 
-echo -e "\n"
+echo -e "\nFinished updating!"
+read -p "Press enter to continue . . ."
