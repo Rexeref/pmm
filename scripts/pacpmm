@@ -1,0 +1,22 @@
+#!/bin/bash
+
+action=$(echo -e "Install\nRemove\nClean\nPacseek" | fzf --prompt="pmm>yay> ")
+case "$action" in
+    Install)
+        app=$(yay -Slq | fzf --prompt="pmm>yay>install> ")
+        [[ -n "$app" ]] && yay -S --noconfirm "$app"
+        ;;
+    Remove)
+        app=$(yay -Qq | fzf --prompt="pmm>yay>remove> ")
+        [[ -n "$app" ]] && yay -Rns --noconfirm "$app"
+        ;;
+    Clean)
+        yay -Sc --noconfirm
+        ;;
+	Pacseek)
+		pacseek
+		;;
+    *)
+        echo "No action selected."
+        ;;
+esac

@@ -48,7 +48,7 @@ do
 			flatpmm
 	        ;;
 	    pacman | yay | pacseek | arch )
-			pacseek
+			pacpmm
 	        ;;
 	    "full update" | fu)
 	        fupmm
