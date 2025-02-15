@@ -1,12 +1,12 @@
 #! /bin/bash
-sudo echo -e "\n"
 clear
-
 echo -e "╭────────────────────╮"
 echo -e "│ \x1b[93mFull Update Script\x1b[0m │"
 echo -e "╰────────────────────╯"
 
-echo -e "\n╭──────────────╮"
+sudo echo -e " "
+
+echo -e "╭──────────────╮"
 echo -e "│ \x1b[96mPACMAN / YAY\x1b[0m │"
 echo -e "╰──────────────╯"
 # If there's pacman but not yay
