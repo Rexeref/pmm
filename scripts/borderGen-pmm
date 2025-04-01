@@ -1,0 +1,24 @@
+#! /usr/bin/bash
+text=$1
+colorCode=$2
+textLenght=${#text}
+
+function correctLenLine {
+	for ((i=0; i < $textLenght + 2; i++));
+	do
+			echo -n "─"
+	done
+}
+
+# Line 1
+echo -n "╭"
+correctLenLine
+echo "╮"
+
+# Line 2
+echo -e "│ \x1b[${colorCode}m${text}\x1b[0m │"
+
+# Line 3
+echo -n "╰"
+correctLenLine
+echo "╯"

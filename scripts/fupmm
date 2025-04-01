@@ -1,14 +1,13 @@
 #! /bin/bash
 clear
-echo -e "╭────────────────────╮"
-echo -e "│ \x1b[93mFull Update Script\x1b[0m │"
-echo -e "╰────────────────────╯"
+borderGen-pmm "Full Update Script" 93
 
-sudo echo -e " "
+# Controlla se è eseguito come root, altrimenti rilancia con sudo
+if [[ $EUID -ne 0 ]]; then
+    exec sudo "$0" "$@"
+fi
 
-echo -e "╭──────────────╮"
-echo -e "│ \x1b[96mPACMAN / YAY\x1b[0m │"
-echo -e "╰──────────────╯"
+borderGen-pmm "PACMAN" 96
 # If there's pacman but not yay
 if [[ "${availablepmlist}" == *"pacman"* ]] && [[ "${availablepmlist}" != *"yay"* ]]
 	then
@@ -24,9 +23,7 @@ else
 	yay -Syyu
 fi
 
-echo -e "\n╭─────╮"
-echo -e "│ \x1b[91mAPT\x1b[0m │"
-echo -e "╰─────╯"
+borderGen-pmm "APT" 91
 if ! command -v apt 2>&1 >/dev/null
 then
 	echo -e "apt could not be found. Skipping this package manager. "
@@ -35,9 +32,7 @@ else
 	sudo apt upgrade
 fi
 
-echo -e "\n╭─────────╮"
-echo -e "│ \x1b[94mFLATPAK\x1b[0m │"
-echo -e "╰─────────╯"
+borderGen-pmm "FLATPAK" 94
 if ! command -v flatpak 2>&1 >/dev/null
 then
 	echo -e "flatpak could not be found. Skipping this package manager."
