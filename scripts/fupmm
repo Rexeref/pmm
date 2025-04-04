@@ -2,10 +2,11 @@
 clear
 borderGen-pmm "Full Update Script" 93
 
+## Funziona, però va in contrasto con il funzionamento di yay e flatpak, quindi non ha senso tenerlo
 # Controlla se è eseguito come root, altrimenti rilancia con sudo
-if [[ $EUID -ne 0 ]]; then
-    exec sudo "$0" "$@"
-fi
+#if [[ $EUID -ne 0 ]]; then
+#    exec sudo "$0" "$@"
+#fi
 
 borderGen-pmm "PACMAN" 96
 # If there's pacman but not yay
